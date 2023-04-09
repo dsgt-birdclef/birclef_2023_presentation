@@ -2,12 +2,14 @@
 title: Running a Kaggle Competition Team
 subtitle: Insights and Lessons from BirdCLEF with Data Science @ Georgia Tech
 pagetitle: OMSCS Conference 2023
+institute: Georgia Institute of Technology
 author: |
   | Anthony Miyaguchi
   | <acmiyaguchi@gatech.edu>
 date: 2023-05-03
 colorlinks: true
 theme: Madrid
+dpi: 300
 comment: |
   https://www.uv.es/wikibase/doc/cas/pandoc_manual_2.7.3.wiki?160
   To generate the PDF for the document, run the following command:
@@ -38,6 +40,17 @@ comment: |
 ::::
 :::
 
+# Overview
+
+- What is Kaggle?
+- Why Kaggle?
+- BirdCLEF 2022
+  - Recruitment and Technical Approach
+- BirdCLEF 2023
+  - Updated Recruitment and Technical Approach
+- Thoughts and Advice
+- Q&A
+
 # What is Kaggle?
 
 ![Kaggle: a platform for data science competitions](images/kaggle-open-one-row.png){ height=80% }
@@ -58,9 +71,24 @@ comment: |
 
 # Why Kaggle?
 
-- Can be a good start to a research project
-- Structure and deadlines can help you stay on track
-- Anyone can participate; application-heavy focus and cash prizes
+::: columns
+:::: {.column width=40%}
+
+![The Titanic dataset is an iconic Kaggle challenge.](images/titanic.jpg)
+
+::::
+:::: {.column width=60%}
+
+## Reasons to consider Kaggle
+
+- Good start to a **research project**
+  - Access to impactful real-world problems
+    - bird conservation, cancer detection, etc.
+- **Structure and deadlines** to stay on track
+- Anyone can participate, with a focus on **practical applications and the potential to win cash prizes**
+
+::::
+:::
 
 # BirdCLEF
 
@@ -68,18 +96,42 @@ comment: |
 
 # DS@GT Competition Team
 
+::: columns
+:::: {.column width=60%}
+
 ## Recruitment
 
 - Built a team of 5 people from DS@GT in Spring 2022
 - 3 masters students and 2 undergraduates
 
-## Approach
+## Technical Approach
 
-Motif mining and unsupervised representation learning.
+- **Motif Mining** with SiMPLe-Fast
+  - Find salient sections of audio for classification
+- **Unsupervised Representation Learning** via Triplet Loss
+  - Train an embedding for downstream tasks
+
+::::
+:::: {.column width=40%}
+
+![DS@GT: a student-run data science organization](images/dsgt.png)
+
+::::
+:::
 
 # Why is audio classification challenging?
 
 ![xeno-canto is a crowd sourced database of bird sounds.](images/xeno-canto.png){ height=70% }
+
+# Reading the literature
+
+## Motif Mining - SiMPLe-Fast
+
+[Silva, D. F., Yeh, C. C. M., Zhu, Y., Batista, G. E., & Keogh, E. (2018). Fast similarity matrix profile for music analysis and exploration. IEEE Transactions on Multimedia, 21(1), 29-38.](https://www.cs.ucr.edu/~eamonn/final-fast-similarity-3.pdf)
+
+## Spatial Embeddings - Tile2Vec
+
+[Jean, N., Wang, S., Samar, A., Azzari, G., Lobell, D., & Ermon, S. (2018). Tile2Vec: unsupervised representation learning for spatially distributed data. arXiv.](https://arxiv.org/abs/1805.02855)
 
 # Motif Mining with SiMPLe-Fast
 
@@ -88,6 +140,10 @@ Motif mining and unsupervised representation learning.
 # Representation Learning via Triplet Loss
 
 ![We train an embedding using mined motifs via a triplet loss](images/embedding-pipeline.png){ height=70% }
+
+# Working Notes
+
+![Working notes submitted to the CLEF 2022 conference](images/working-notes.png){ height=70% }
 
 # Results of BirdCLEF 2022
 
@@ -98,7 +154,11 @@ We won $2,500 in Google Cloud Platform credits.
 
 ## Personal Takeaways
 
-- I learned quite a bit about building a team from scratch
+- Building a team is worthwhile and a forcing function for progress
+- Managing a team of 5 people is challenging
+- 6 weeks is not enough time for meaningful contributions to a large codebase
+
+---
 
 # Approaching BirdCLEF 2023
 
@@ -114,20 +174,46 @@ We won $2,500 in Google Cloud Platform credits.
 - Build a process for machine-assisted dataset annotation
 - Toy with sequence models (RNNs, Transformers, etc.)
 
-# Recruiting a new team
+# Recruitment: Proposal
 
-- The biggest takeaway is to be organized.
-- Proposals or structure can help set expectations.
-- People will drop from the team
+![A proposal document is a useful way to document intent and expectations.](images/birdclef-2023-proposal.png){ height=70% }
+
+# Recruitment: Assessment
+
+::: columns
+:::: {.column width=50%}
+
+![Assessment in a Fall 2022 project group, using BirdCLEF metadata](images/f22-eda-assessment.png){ height=70% }
+
+::::
+:::: {.column width=50%}
+
+![Table of Contents from the BirdCLEF 2023 assessment.](images/birdclef-2023-assessment.png){ height=70% }
+
+::::
+:::
+
+# Recruitment: Outreach
+
+![A post on the OMSCS Research EdStem board.](images/edstem.png){ height=70% }
+
+## Reach out to other students!
+
+- Slack: OMSCS Study Group and OMSA Study Group
+- EdStem: OMSCS Research
+- Clubs: Data Science @ Georgia Tech
 
 # Organization
 
-- Weekly meetings
-- Documenting progress
+## Team Structure
+
+- Weekly meetings over Zoom once a week for 45 minutes
+- Slack channel for communication
 - Shared GitHub and Google Cloud Project
 
-# Leading a team is challenging
+## Being a Project Lead
 
+Leading a team is challenging.
 Every team is different, and every leader has their own style.
 
 # Technical approach
@@ -139,6 +225,16 @@ Every team is different, and every leader has their own style.
 - Sound Separation with MixIT
 - Automated dataset annotation
 - Sequence models with embeddings
+
+# Reading the literature, yet again
+
+## Domain specific deep learning model - BirdNET
+
+[Kahl, S., Wood, C. M., Eibl, M., & Klinck, H. (2021). BirdNET: A deep learning solution for avian diversity monitoring. Ecological Informatics, 61, 101236.](https://www.sciencedirect.com/science/article/pii/S1574954121000273)
+
+## Sound separation - MixIT
+
+[Denton, T., Wisdom, S., & Hershey, J. R. (2022, May). Improving bird classification with unsupervised sound separation. In ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (pp. 636-640). IEEE.](https://arxiv.org/abs/2110.03209)
 
 # Building data pipelines with Luigi
 
@@ -166,36 +262,91 @@ Every team is different, and every leader has their own style.
 
 # BirdCLEF 2023 is ongoing!
 
-Talk to me if you're interesting in jumping in last minute, it's a great time to join!
+![Bird conservation is a worthy cause and a great opportunity to learn.](images/yellow-warbler.jpg){ height=50% }
+
+## Interested in joining?
+
+Talk to me if you're interesting in jumping in last minute.
+
+---
 
 # Advice for myself one year ago
 
 ## Building a team is worthwhile
 
-It got you over the finish line, and as a result were recognized for your work.
+- A strong team can help you achieve more than you could on your own.
+  It's also an opportunity to connect with other students.
 
 ## Be prepared to learn how to lead a team
 
-Giving people space to work is important.
-People at Tech are smart, and they can figure things out.
-But also be wary and communicate timelines.
-
-It got you over the finish line, and recognized as a result.
+- Effective communication and clear timelines are key to keeping the team on track
+- Remember that everyone on the team is capable and valuable, and make an effort to recognize and appreciate their contributions
 
 ## Reach out to OMSCS and OMSA early
 
-There are a lot of people in the program that are interested in research.
+- Working professionals have _a lot_ to bring to the table.
 
 # Be on the lookout for opportunities
 
+![Be on the lookout!](images/birdwatching.jpg){ height=50%}
+
+<!-- https://pixnio.com/people/children-kids/a-close-shot-of-children-birdwatching# -->
+
 There's an abundance of opportunities for OMSCS students to collaborate with other students.
 
-# Thank you!
+# Thank you to everyone involved
 
-## Links
+::: columns
+:::: column
 
-- [Motif Mining and Unsupervised Representation Learning for BirdCLEF 2022](https://short.acmiyaguchi.me/birdclef-2022-working-notes)
+## DS@GT Leadership
+
+- Pulak Agarwal
+- Krishi Manek
+
+## BirdCLEF 2022
+
+- Jiangyue Yu
+- Bryan Cheungvivatpant
+- Dakota Dudley
+- Aniketh Swain
+
+::::
+:::: column
+
+## BirdCLEF F22 EDA
+
+- Jinsong Zhen
+- Kien Tran
+- Siying Liu
+- Muskaan Gupta
+- Xinjin Li
+
+## BirdCLEF 2023
+
+- Chris Hayduk
+- Erin Middlemas
+- Grant Williams
+- Nathan Zhong
+
+::::
+:::
+
+# Links and Resources
+
+- [Working Notes, "Motif Mining and Unsupervised Representation Learning for BirdCLEF 2022"](https://short.acmiyaguchi.me/birdclef-2022-working-notes)
 - [DS@GT, Kaggle Competition Team Proposal, BirdCLEF 2022](https://short.acmiyaguchi.me/dsgt-birdclef-2022-proposal)
 - [DS@GT, Project Group Proposal, BirdCLEF EDA Fall 2022](https://short.acmiyaguchi.me/dsgt-birdclef-eda-f22-proposal)
 - [DS@GT, Kaggle Competition Team Proposal, BirdCLEF 2023](https://short.acmiyaguchi.me/dsgt-birdclef-2023-proposal)
-- [BirdCLEF Motif Viewer - Barn Owl, XC138041](https://short.acmiyaguchi.me/birdclef-brnowl-motif)
+- [DS@GT, Assessment, BirdCLEF EDA Fall 2022](https://short.acmiyaguchi.me/dsgt-birdclef-eda-f22-assessment)
+- [DS@GT, Assessment, BirdCLEF 2023](https://short.acmiyaguchi.me/dsgt-birdclef-2023-assessment)
+- [BirdCLEF Motif Viewer, Barn Owl, XC138041](https://short.acmiyaguchi.me/birdclef-brnowl-motif)
+- [BirdCLEF 2023 MixIT Exploration, Red-chested Cuckoo, 2FXC207767](https://birdclef-2023.dsgt-kaggle.org/mixit-exploration?detailed=false&track=reccuc1%2FXC207767.ogg)
+
+# Thank you!
+
+## Time for Questions and Answers
+
+![Q&A](images/bird-flock.jpg){ height=70% }
+
+<!-- https://commons.wikimedia.org/wiki/File:Flock_of_Birds_%287175071318%29.jpg -->
