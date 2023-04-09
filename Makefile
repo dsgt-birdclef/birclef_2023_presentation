@@ -1,4 +1,6 @@
-.PHONY: all clean slides-beamer slides-revealjs diagrams
+.PHONY: all clean slides
+
+all: slides info
 
 slides:
 	pandoc -s \
@@ -6,10 +8,5 @@ slides:
 		-o rendered/slides.pdf \
 		slides.md
 
-slides-revealjs:
-	pandoc -s \
-		-t revealjs \
-		-o rendered/slides.html \
-		-V revealjs-url=https://unpkg.com/reveal.js/ \
-		-V theme=serif \
-		slides.md
+info:
+	pandoc -s -o rendered/info.pdf info.md
