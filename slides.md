@@ -1,6 +1,6 @@
 ---
 title: Running a Kaggle Competition Team
-subtitle: BirdCLEF with Data Science @ Georgia Tech
+subtitle: Insights and Lessons from BirdCLEF with Data Science @ Georgia Tech
 pagetitle: OMSCS Conference 2023
 author: |
   | Anthony Miyaguchi
@@ -102,13 +102,13 @@ We won $2,500 in Google Cloud Platform credits.
 
 # Approaching BirdCLEF 2023
 
-## New year new team
+## New year, new team
 
 - Building the team from the get-go
 - Proposals, assessments, and interviews
 - Reaching out to Slack, EdStem, and DS@GT
 
-## New approach
+## New technical approach
 
 - Retrain using embeddings from older models
 - Build a process for machine-assisted dataset annotation
@@ -132,11 +132,37 @@ Every team is different, and every leader has their own style.
 
 # Technical approach
 
-## Building data pipelines with Luigi
+## Outline
 
-## BirdNET embeddings
+- Building data pipelines with Luigi
+- BirdNET embeddings
+- Sound Separation with MixIT
+- Automated dataset annotation
+- Sequence models with embeddings
 
-## Sound Separation with MixIT
+# Building data pipelines with Luigi
+
+![Luigi is a Python library for building data pipelines.](images/luigi.png){ height=70% }
+
+# BirdNET embeddings
+
+![We can use the BirdNET embedding space for search and nearest neighbor queries.](images/birdnet-cluster.png){ height=70% }
+
+# BirdNET predictions for annotation
+
+![The BirdNET predictions can help with data annotation.](images/birdnet-pred.png){ height=70% }
+
+# Sound Separation with MixIT
+
+![MixIT is a sound separation algorithm.](images/mixit.png){ height=70% }
+
+# Automated dataset annotation
+
+![Chunked spectrogram of a bird call.](images/chunked-spectrogram.png){ height=70% }
+
+# Sequence models with embeddings
+
+![We experiment with embeddings in a sequence model (e.g. Transformers) to imbue temporal context.](images/architecture.png){ height=70% }
 
 # BirdCLEF 2023 is ongoing!
 
@@ -148,13 +174,15 @@ Talk to me if you're interesting in jumping in last minute, it's a great time to
 
 It got you over the finish line, and as a result were recognized for your work.
 
-## Watch out for micro-management
+## Be prepared to learn how to lead a team
 
 Giving people space to work is important.
 People at Tech are smart, and they can figure things out.
 But also be wary and communicate timelines.
 
-## Reach out to OMSCS and OMSA
+It got you over the finish line, and recognized as a result.
+
+## Reach out to OMSCS and OMSA early
 
 There are a lot of people in the program that are interested in research.
 
@@ -163,3 +191,11 @@ There are a lot of people in the program that are interested in research.
 There's an abundance of opportunities for OMSCS students to collaborate with other students.
 
 # Thank you!
+
+## Links
+
+- [Motif Mining and Unsupervised Representation Learning for BirdCLEF 2022](https://short.acmiyaguchi.me/birdclef-2022-working-notes)
+- [DS@GT, Kaggle Competition Team Proposal, BirdCLEF 2022](https://short.acmiyaguchi.me/dsgt-birdclef-2022-proposal)
+- [DS@GT, Project Group Proposal, BirdCLEF EDA Fall 2022](https://short.acmiyaguchi.me/dsgt-birdclef-eda-f22-proposal)
+- [DS@GT, Kaggle Competition Team Proposal, BirdCLEF 2023](https://short.acmiyaguchi.me/dsgt-birdclef-2023-proposal)
+- [BirdCLEF Motif Viewer - Barn Owl, XC138041](https://short.acmiyaguchi.me/birdclef-brnowl-motif)
