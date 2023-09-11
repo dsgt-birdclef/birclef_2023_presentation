@@ -19,31 +19,6 @@ comment: |
   ```
 ---
 
-# Who am I?
-
-::: columns
-:::: {.column width=40%}
-
-![](images/portrait.png)
-
-::::
-:::: {.column width=60%}
-
-- A Software Engineer
-  - 5 years as a Data Engineer at Mozilla
-  - 1.5 years as a Software Engineer at Planet Labs
-- OMSCS, matriculated Spring 2022
-  - B.S. Computer Science and Engineering from UCLA 2016
-  - Graduate Certificate from Stanford Center for Professional Development (SCPD) 2018
-- Career focus on scalable data systems and machine learning
-
-::::
-:::
-
-# Overview
-
-TBD
-
 # DS@GT Competition Team
 
 ::: columns
@@ -56,9 +31,10 @@ TBD
 
 ## Technical Approach
 
-- Retrain using embeddings from older models
-- Build a process for machine-assisted dataset annotation
-- Toy with sequence models (RNNs, Transformers, etc.)
+- Use Bird-MixIT to sound separate audio
+- Use BirdNET to generate embeddings and labels
+- Generate pseudo-labels with heuristics
+- Solve supervised classification problem
 
 ::::
 :::: {.column width=40%}
@@ -68,23 +44,28 @@ TBD
 ::::
 :::
 
-# Recruitment: Outreach
+# Team DS@GT
 
-![A post on the OMSCS Research EdStem board.](images/edstem.png){ height=70% }
+::: columns
+:::: {.column width=50%}
+
+![Anthony Miyaguchi](images/portraits/anthony.png){width=50%}
+
+![Nathan Zhong](images/portraits/nathan.png){width=50%}
+
+::::
+:::: {.column width=50%}
+
+![Murilo Gustineli](images/portraits/murilo.jpg){width=50%}
+
+![Chris Hayduk](images/portraits/chris.jpg){width=50%}
+
+::::
+:::
 
 # Why is audio classification challenging?
 
 ![xeno-canto is a crowd sourced database of bird sounds.](images/xeno-canto.png){ height=70% }
-
-# Technical approach
-
-## Outline
-
-- Building data pipelines with Luigi
-- BirdNET embeddings
-- Sound Separation with MixIT
-- Automated dataset annotation
-- Sequence models with embeddings
 
 # Reading the literature
 
@@ -96,29 +77,133 @@ TBD
 
 [Denton, T., Wisdom, S., & Hershey, J. R. (2022, May). Improving bird classification with unsupervised sound separation. In ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (pp. 636-640). IEEE.](https://arxiv.org/abs/2110.03209)
 
-# Building data pipelines with Luigi
+---
 
-![Luigi is a Python library for building data pipelines.](images/luigi.png){ height=70% }
+# Approach
 
-# BirdNET embeddings
+## Outline
 
-![We can use the BirdNET embedding space for search and nearest neighbor queries.](images/birdnet-cluster.png){ height=70% }
-
-# BirdNET predictions for annotation
-
-![The BirdNET predictions can help with data annotation.](images/birdnet-pred.png){ height=70% }
+- Use Bird-MixIT to sound separate audio
+- Use BirdNET to generate embeddings and labels
+- Generate pseudo-labels with heuristics
+- Solve supervised classification problem
 
 # Sound Separation with MixIT
 
 ![MixIT is a sound separation algorithm.](images/mixit.png){ height=70% }
 
-# Automated dataset annotation
+# BirdNET embeddings
+
+![We can use the BirdNET embedding space for search and nearest neighbor queries.](images/birdnet-embeddings-v3.png){ height=70% }
+
+# BirdNET soft-labels as pseudo-labels
+
+![The BirdNET predictions can help with data annotation.](images/birdnet-pred.png){ height=70% }
+
+# Supervised learning: classification
+
+![](images/birdnet-embedding-umap-model.png){ height=70% }
+
+# Engineering challenges
+
+## Outline
+
+- Pre-processing audio data
+- Time-resolution mismatches
+- Classification implementations and performance
+
+# Preprocessing audio data: Luigi pipelines
+
+![We use Luigi to coordinate a processing pipeline spanning days on an n2-standard-16 compute instance. We prevent processing skew across workers by recursively training audio. The audio is then source separated and embedded, resulting in a parquet file per audio chunk. We consolidate the parquet files into the final dataset.](images/train-pipeline-graphviz.png){ height=70% }
+
+# Time-resolution mismatches
 
 ![Chunked spectrogram of a bird call.](images/chunked-spectrogram.png){ height=70% }
 
-# Sequence models with embeddings
+# Classification implementations and performance
 
-![We experiment with embeddings in a sequence model (e.g. Transformers) to imbue temporal context.](images/architecture.png){ height=70% }
+<!-- prettier-ignore -->
+\begin{table}[h]
+\caption{
+A comparison between fit and predict the time for various models fit on a GCP n1-standard-4 compute instance with a Telsa T4 GPU. 
+We fit the post-v7 dataset, which has 255,372 rows.
+}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Model                                                 & GPU & Fit time    & Predict time \\ \hline
+Logistic Regression                                   & No  & 59 min 17 s & 1.5 s          \\ \hline
+SVC                                                   & No  & 90 min +    & -              \\ \hline
+MLP                                                   & No  & 4 min 14 s  & 3.5 s          \\ \hline
+XGBoost (hist)                                        & No  & 48 min 20 s & 14.4 s         \\ \hline
+XGBoost (gpu\_hist)                                   & Yes & 5 min       & 15.3 s         \\ \hline
+ComplementNB                                          & No  & 4.2 s       & 1.5 s          \\ \hline
+\end{tabular}
+\label{tab:model-fit-time}
+\end{table}
+
+---
+
+# Results
+
+## Outline
+
+- Overall performance
+- Experiments with psuedo-labeling and augmentation
+
+# Overall performance
+
+<!-- prettier-ignore -->
+\begin{table}[h!]
+\caption{
+  A summary of few models.
+  Logistic regression is our simplest model.
+  XGBoost is trained on a multi-label dataset.
+}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Model} & \textbf{Public Score} & \textbf{Private Score} \\ \hline
+Logistic Regression & 0.78541 & 0.68369 \\ \hline
+MLP & 0.74014 & 0.62283 \\ \hline
+XGBoost & 0.79068 & 0.68181 \\ \hline
+\end{tabular}
+\label{tab:model-summary}
+\end{table}
+
+# Experiments
+
+## Psuedo-labeling
+
+- Use the primary class of the track as the label, when the confidence is above a threshold
+- Multi-label classification
+
+## Data Augmentation
+
+Embedding augmentation via concatenation and averaging.
+
+<!-- prettier-ignore -->
+\begin{align}
+    \hat{y} &\sim M_1(v_t) \\
+    \hat{y} &\sim M_2(v_t \oplus v_{t+1}) \\
+    \hat{y} &\sim M_3(v_t \oplus \sum_{i=0}^{n} v_i) \\
+    \hat{y} &\sim M_4(v_t \oplus v_{t+1} \oplus \sum_{i=0}^{n} v_i)
+\end{align}
+
+---
+
+# Next time
+
+- More variations of semi-supervision
+  - A more rigorous approach to evaluation
+- Comparisons of embedding models
+  - Meta AudioGen, OpenAI Whisper, Mozilla DeepSpeech
+- Embedding dynamics
+  - Linear dynamics with forcing function, found via SVD?
+  - Motif mining of the forcing function
+  - Scale of the problem is best solved by Spark
+- Sequence models
+  - Learn a sequence model that best predicts the optimal set of classes
+  - All data can be fed in one model start to end
+    - Would rather this be in Torch, rather than Tensorflow, which leans toward the direction of AudioGen
 
 ---
 
@@ -141,6 +226,10 @@ TBD
 ## Reach out to OMSCS and OMSA early
 
 - Working professionals have _a lot_ to bring to the table.
+
+# Recruitment: Outreach
+
+![A post on the OMSCS Research EdStem board.](images/edstem.png){ height=70% }
 
 # Be on the lookout for opportunities
 
